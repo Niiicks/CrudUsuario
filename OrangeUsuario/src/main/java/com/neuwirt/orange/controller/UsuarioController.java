@@ -1,6 +1,5 @@
 package com.neuwirt.orange.controller;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -29,27 +28,9 @@ public class UsuarioController {
 	UsuarioRepository usuarioRepository;
 		
 	@PostMapping("/cadastrar")
-	public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid Usuario usuario){		
-		
-		return ResponseEntity.status(HttpStatus.CREATED).body(new UsuarioDto(usuario));
-        try {    
-        	usuarioRepository.save(usuario);
-
-
-        } catch (SQLIntegrityConstraintViolationException e) {
-            if(e instanceof SQLIntegrityConstraintViolationException) {
-                if(e.getSQLState().equals("23000")) {
-                    if(e.getMessage().contains("Duplicate")) {
-                        if (e.getMessage().contains("email")) {
-                            System.out.println("Duplicate username"); 
-                        } else {
-                            System.out.println("Duplicate email"); 
-                        }
-                    }
-                }
-            }
-		
-		
+	public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid Usuario usuario){
+		usuarioRepository.save(usuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new UsuarioDto(usuario));
 	}
 	
 	@GetMapping("/{id}")

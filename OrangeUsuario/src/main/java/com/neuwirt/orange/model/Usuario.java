@@ -1,6 +1,5 @@
 package com.neuwirt.orange.model;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,7 +12,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -36,10 +34,6 @@ public class Usuario {
 	@Column(unique = true)
 	@Pattern(regexp = "^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$", message = "Favor seguir o padrão 000.000.000-00")
 	private String cpf;
-	
-	@NotNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate dataNascimento;
 
 	@OneToMany(mappedBy = "usuario")
 	@JsonIgnoreProperties("usuario")
@@ -85,12 +79,5 @@ public class Usuario {
 		this.enderecos = endereco;
 	}
 
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
 
 }
